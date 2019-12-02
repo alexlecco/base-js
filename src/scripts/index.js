@@ -3,10 +3,11 @@ import '../styles/index.scss';
 console.log('webpack starterkit');
 
 // when app starts
-window.onload = hideLogoutBtn;
+window.onload = startApp;
 
 // variables
 let logged = false;
+let loggedUsr = {};
 let users = [
     {
         user: "alex",
@@ -66,8 +67,42 @@ let users = [
 ];
 
 // functions
-function hideLogoutBtn() {
+function startApp() {
     document.getElementById("logoutBtn").hidden = true;
+
+    let user = localStorage.getItem("user");
+    let pass = localStorage.getItem("pass");
+
+    identifyUser(user, pass)
+
+    document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${loggedUsr.name}</h1>`;
+}
+
+function identifyUser(user,pass) {
+    for(var i = 0; i < users.length; i++) {
+        // check is user input matches username and password of a current index of the users array
+        if(user === users[i].user && pass === users[i].pass) {
+            
+            logged = true;
+            loggedUsr = { ...users[i] };
+        
+            localStorage.setItem("user", user);
+            localStorage.setItem("pass", pass);
+            
+            document.getElementById("user").value = '';
+            document.getElementById("pass").value = '';
+            
+            document.getElementById("loginBtn").hidden = true;
+            document.getElementById("logoutBtn").hidden = false;
+            document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${users[i].name}</h1>`;
+            
+            console.log("Logged: ", logged)
+            console.log("Logged User: ", loggedUsr.user)
+
+            // stop the function if this is found to be true
+            return
+        }
+    }
 }
 
 window.login = function() {
@@ -75,28 +110,7 @@ window.login = function() {
     let pass = document.getElementById("pass").value;
 
     if(user && pass) {
-        for(var i = 0; i < users.length; i++) {
-            // check is user input matches username and password of a current index of the users array
-            if(user == users[i].user && pass == users[i].pass) {
-                
-                logged = true;
-            
-                localStorage.setItem("user", user);
-                localStorage.setItem("pass", pass);
-                
-                document.getElementById("user").value = '';
-                document.getElementById("pass").value = '';
-                
-                document.getElementById("loginBtn").hidden = true;
-                document.getElementById("logoutBtn").hidden = false;
-                document.getElementById("greetings").innerHTML = `<h1>Bienvenido ${users[i].name}</h1>`;
-                
-                console.log("Logged User: ", logged)
-
-                // stop the function if this is found to be true
-                return
-            }
-        }
+        identifyUser(user, pass)
 
         if (!logged) alert("Usuario incorrecto")
     } else {
@@ -114,5 +128,5 @@ window.logout = function() {
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("loginBtn").hidden = false;
 
-    console.log("Logged User: ", logged)
+    console.log("Logged: ", logged)
 }
