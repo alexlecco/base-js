@@ -12,58 +12,90 @@ let users = [
     {
         user: "alex",
         pass: "lecco",
-        name: "Alex Villecco"
+        name: "Alex Villecco",
+        isDoctor: false
     },
     {
         user: "pri",
         pass: "bar",
-        name: "Pricilla Barcellone"
+        name: "Pricilla Barcellone",
+        isDoctor: false
     },
     {
         user: "ben",
         pass: "mon",
-        name: "Benja Montero"
+        name: "Benja Montero",
+        isDoctor: false
     },
     {
         user: "mel",
         pass: "gra",
-        name: "Melisa Gramajo"
+        name: "Melisa Gramajo",
+        isDoctor: false
     },
     {
         user: "max",
         pass: "sim",
-        name: "Maxi Simonazzi"
+        name: "Maxi Simonazzi",
+        isDoctor: false
     },
     {
         user: "pab",
         pass: "nav",
-        name: "Juan Pablo Navarro"
+        name: "Juan Pablo Navarro",
+        isDoctor: false
     },
     {
         user: "jos",
         pass: "mar",
-        name: "Jose Marín"
+        name: "Jose Marín",
+        isDoctor: false
     },
     {
         user: "fed",
         pass: "mes",
-        name: "Fede Mesón"
+        name: "Fede Mesón",
+        isDoctor: false
     },
     {
         user: "cri",
         pass: "mol",
-        name: "Cristian Molina"
+        name: "Cristian Molina",
+        isDoctor: false
     },
     {
         user: "rob",
         pass: "sal",
-        name: "Roberto Sale"
+        name: "Roberto Sale",
+        isDoctor: false
     },
     {
         user: "max",
         pass: "rod",
-        name: "Maxi Rodriguez"
+        name: "Maxi Rodriguez",
+        isDoctor: false
     },
+    {
+        user: "doc1",
+        pass: "doc1",
+        name: "Roberto Chapatin",
+        isDoctor: true,
+        specialty: "1"
+    },
+    {
+        user: "doc2",
+        pass: "doc2",
+        name: "Gregory House",
+        isDoctor: true,
+        specialty: "2"
+    },
+    {
+        user: "doc3",
+        pass: "doc3",
+        name: "Julius Hibert",
+        isDoctor: true,
+        specialty: "3"
+    }
 ];
 
 // functions
@@ -129,4 +161,28 @@ window.logout = function() {
     document.getElementById("loginBtn").hidden = false;
 
     console.log("Logged: ", logged)
+}
+
+window.search = function() {
+    document.getElementById("clinic-results").innerHTML = "<div></div>"
+    let term = document.getElementById('clinic-input').value;
+
+    let doctors = users.filter(user => user.isDoctor)
+    let filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()))
+    
+    let ulTag = document.createElement('ul');
+    let liTag;
+    filteredDoctors.forEach(doctor => {
+        liTag = document.createElement('li');
+        let textNode = document.createTextNode(doctor.name)
+        liTag.appendChild(textNode);
+        ulTag.appendChild(liTag);
+    });
+
+    document.getElementById("clinic-results").appendChild(ulTag);
+}
+
+window.clean = function() {
+    document.getElementById("clinic-input").value = ""
+    document.getElementById("clinic-results").innerHTML = "<div></div>"
 }
