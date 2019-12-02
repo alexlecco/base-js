@@ -115,20 +115,22 @@ let users = [
 // functions
 function startApp() {
     document.getElementById("logoutBtn").hidden = true;
+    document.getElementById("accountBtn").hidden = true;
     document.getElementById("account").hidden = true;
     document.getElementById("card").hidden = true;
     document.getElementById("loan").hidden = true;
-
+    
     let user = localStorage.getItem("user");
     let pass = localStorage.getItem("pass");
-
-    identifyUser(user, pass)
-
-    if(loggedUsr !== {}) {
+    
+    if(identifyUser(user, pass)) {
         document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${loggedUsr.name}</h1>`;
         document.getElementById("user").hidden = true;
         document.getElementById("pass").hidden = true;
         document.getElementById("loggedUser").hidden = false;
+        document.getElementById("accountBtn").hidden = false;
+    } else {
+        document.getElementById("loggedUser").hidden = true;
     }
 }
 
@@ -154,9 +156,12 @@ function identifyUser(user, pass) {
             console.log("Logged User: ", loggedUsr.user)
 
             // stop the function if this is found to be true
-            return
+            console.log("SIIIIIIIIIIIIIIII")
+            return true
         }
     }
+    console.log("NOOOOOOOOOOOOOO")
+    return false
 }
 
 window.login = function() {
@@ -171,6 +176,7 @@ window.login = function() {
             document.getElementById("loggedUser").hidden = false;
             document.getElementById("user").hidden = true;
             document.getElementById("pass").hidden = true;
+            document.getElementById("accountBtn").hidden = false;
         }
     } else {
         alert("Debe ingresar usuario y contraseña");
@@ -186,6 +192,7 @@ window.logout = function() {
     document.getElementById("greetings").innerHTML = `<h1></h1>`;
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("loginBtn").hidden = false;
+    document.getElementById("accountBtn").hidden = true;
 
     console.log("Logged: ", logged)
     document.getElementById("loggedUser").hidden = true;
