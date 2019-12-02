@@ -114,6 +114,10 @@ let users = [
 
 // functions
 function startApp() {
+    if(!localStorage.getItem("users")) {
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("account").hidden = true;
     document.getElementById("card").hidden = true;
@@ -134,7 +138,6 @@ function startApp() {
 
 function identifyUser(user, pass) {
     for(var i = 0; i < users.length; i++) {
-        // check is user input matches username and password of a current index of the users array
         if(user === users[i].user && pass === users[i].pass) {
             
             logged = true;
@@ -153,12 +156,9 @@ function identifyUser(user, pass) {
             console.log("Logged: ", logged)
             console.log("Logged User: ", loggedUsr.user)
 
-            // stop the function if this is found to be true
-            console.log("SIIIIIIIIIIIIIIII")
             return true
         }
     }
-    console.log("NOOOOOOOOOOOOOO")
     return false
 }
 
@@ -223,6 +223,17 @@ window.search = function() {
 window.clean = function() {
     document.getElementById("clinic-input").value = ""
     document.getElementById("clinic-results").innerHTML = "<div></div>"
+}
+
+window.hireAccount = function() {
+    let income = document.getElementById("income").value;
+    
+}
+
+window.hireCard = function() {
+}
+
+window.hireLoan = function() {
 }
 
 window.account = function() {
