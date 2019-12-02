@@ -101,6 +101,7 @@ let users = [
 // functions
 function startApp() {
     document.getElementById("logoutBtn").hidden = true;
+    document.getElementById("loggedUser").hidden = true;
 
     let user = localStorage.getItem("user");
     let pass = localStorage.getItem("pass");
@@ -142,11 +143,16 @@ window.login = function() {
     let pass = document.getElementById("pass").value;
 
     if(user && pass) {
-        identifyUser(user, pass)
-
-        if (!logged) alert("Usuario incorrecto")
+        identifyUser(user, pass);
+        if (!logged) {
+            alert("Usuario incorrecto");
+        } else {
+            document.getElementById("loggedUser").hidden = false;
+            document.getElementById("user").hidden = true;
+            document.getElementById("pass").hidden = true;
+        }
     } else {
-        alert("Debe ingresar usuario y contraseña")
+        alert("Debe ingresar usuario y contraseña");
     }
 };
 
@@ -161,6 +167,9 @@ window.logout = function() {
     document.getElementById("loginBtn").hidden = false;
 
     console.log("Logged: ", logged)
+    document.getElementById("loggedUser").hidden = true;
+    document.getElementById("user").hidden = false;
+    document.getElementById("pass").hidden = false;
 }
 
 window.search = function() {
