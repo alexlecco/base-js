@@ -16,12 +16,16 @@ li {
   list-style-type: none;
 }
 
-.container {
+.row {
+  display: flex;
+}
+
+.content {
   $self: &;
   padding: 50px 20px;
   background-color: red;
-  margin: 10px 0;
-  max-width: 350px;
+  margin: 10px 10px 0;
+  width: 350px;
 
   &.clinic {
     background-color: aquamarine;

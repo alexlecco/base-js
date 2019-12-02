@@ -115,7 +115,6 @@ let users = [
 // functions
 function startApp() {
     document.getElementById("logoutBtn").hidden = true;
-    document.getElementById("accountBtn").hidden = true;
     document.getElementById("account").hidden = true;
     document.getElementById("card").hidden = true;
     document.getElementById("loan").hidden = true;
@@ -128,7 +127,6 @@ function startApp() {
         document.getElementById("user").hidden = true;
         document.getElementById("pass").hidden = true;
         document.getElementById("loggedUser").hidden = false;
-        document.getElementById("accountBtn").hidden = false;
     } else {
         document.getElementById("loggedUser").hidden = true;
     }
@@ -176,7 +174,6 @@ window.login = function() {
             document.getElementById("loggedUser").hidden = false;
             document.getElementById("user").hidden = true;
             document.getElementById("pass").hidden = true;
-            document.getElementById("accountBtn").hidden = false;
         }
     } else {
         alert("Debe ingresar usuario y contraseña");
@@ -192,7 +189,6 @@ window.logout = function() {
     document.getElementById("greetings").innerHTML = `<h1></h1>`;
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("loginBtn").hidden = false;
-    document.getElementById("accountBtn").hidden = true;
 
     console.log("Logged: ", logged)
     document.getElementById("loggedUser").hidden = true;
