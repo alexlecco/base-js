@@ -102,6 +102,13 @@ let users = [
         name: "Steven Strange",
         isDoctor: true,
         specialty: "4"
+    },
+    {
+        user: "doc5",
+        pass: "doc5",
+        name: "John Dolittle",
+        isDoctor: true,
+        specialty: "5"
     }
 ];
 

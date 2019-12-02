@@ -7,7 +7,7 @@
 </head>
 <body>
   <h1>Base JS</h1>
-  <p>✨ Algunas cuestiones comunes a rolling-bank y codecare...</p>
+  <p>✨ Algunas cuestiones comunes a rolling-bank y code-care...</p>
 
   <input id="user" type="text" placeholder="usuario" required>
   <input id="pass" type="password"  placeholder="contraseña" required>
@@ -18,17 +18,22 @@
   <h3 id="greetings"></h3>
 
   <div id="loggedUser">
-    <div id="clinic-container">
+
+    <div class="container clinic">
+      <h3>nuestros profesionales</h3>
       <input id="clinic-input" type="text" placeholder="Nombre del medico" required>
       <button id="clinic-search" onclick="search()">buscar</button>
       <button id="clinic-clean" onclick="clean()">limpiar</button>
-  
       <div id="clinic-results"></div>
     </div>
 
-    <div id="bank-container">
-        
+    <div class="container bank">
+      <h3>nuestros productos</h3>
+      <button id="bank-account" onclick="account()">cuenta bancaria</button>
+      <button id="bank-card" onclick="card()">tarjeta de credito</button>
+      <button id="bank-loan" onclick="loan()">prestamo</button>
     </div>
+
   </div>
 
 </body>

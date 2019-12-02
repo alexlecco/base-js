@@ -5,12 +5,17 @@ body {
   font-family: sans-serif;
 }
 
-#clinic-container {
-  background-color: aquamarine;
+.container {
+  $self: &;
   padding: 50px 20px;
-}
+  background-color: red;
+  margin: 10px 0;
 
-#bank-container {
-  background-color: salmon;
-  padding: 50px 20px;
+  &.clinic {
+    background-color: aquamarine;
+  }
+
+  &.bank {
+    background-color: salmon;
+  }
 }
