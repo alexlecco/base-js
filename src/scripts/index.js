@@ -14,14 +14,54 @@ let users = [
         name: "Alex Villecco"
     },
     {
-        user: "nahuel",
-        pass: "jose",
-        name: "Nahuel Jose"
+        user: "pri",
+        pass: "bar",
+        name: "Pricilla Barcellone"
     },
     {
-        user: "juan",
-        pass: "usand",
-        name: "Juan Usandivaras"
+        user: "ben",
+        pass: "mon",
+        name: "Benja Montero"
+    },
+    {
+        user: "mel",
+        pass: "gra",
+        name: "Melisa Gramajo"
+    },
+    {
+        user: "max",
+        pass: "sim",
+        name: "Maxi Simonazzi"
+    },
+    {
+        user: "pab",
+        pass: "nav",
+        name: "Juan Pablo Navarro"
+    },
+    {
+        user: "jos",
+        pass: "mar",
+        name: "Jose Marín"
+    },
+    {
+        user: "fed",
+        pass: "mes",
+        name: "Fede Mesón"
+    },
+    {
+        user: "cri",
+        pass: "mol",
+        name: "Cristian Molina"
+    },
+    {
+        user: "rob",
+        pass: "sal",
+        name: "Roberto Sale"
+    },
+    {
+        user: "max",
+        pass: "rod",
+        name: "Maxi Rodriguez"
     },
 ];
 
