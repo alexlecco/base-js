@@ -203,7 +203,7 @@ window.search = function() {
 
         document.getElementById("clinic-results").appendChild(ulTag);
     } else {
-        alert("Debe ingresar al menos 3 letras en la busqueda");
+        alert("Debe ingresar al menos 1 letra en la busqueda");
     }
 }
 
