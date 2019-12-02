@@ -95,23 +95,34 @@ let users = [
         name: "Julius Hibert",
         isDoctor: true,
         specialty: "3"
+    },
+    {
+        user: "doc4",
+        pass: "doc4",
+        name: "Steven Strange",
+        isDoctor: true,
+        specialty: "4"
     }
 ];
 
 // functions
 function startApp() {
     document.getElementById("logoutBtn").hidden = true;
-    document.getElementById("loggedUser").hidden = true;
 
     let user = localStorage.getItem("user");
     let pass = localStorage.getItem("pass");
 
     identifyUser(user, pass)
 
-    document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${loggedUsr.name}</h1>`;
+    if(loggedUsr !== {}) {
+        document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${loggedUsr.name}</h1>`;
+        document.getElementById("user").hidden = true;
+        document.getElementById("pass").hidden = true;
+        document.getElementById("loggedUser").hidden = false;
+    }
 }
 
-function identifyUser(user,pass) {
+function identifyUser(user, pass) {
     for(var i = 0; i < users.length; i++) {
         // check is user input matches username and password of a current index of the users array
         if(user === users[i].user && pass === users[i].pass) {
@@ -177,7 +188,10 @@ window.search = function() {
     let term = document.getElementById('clinic-input').value;
 
     let doctors = users.filter(user => user.isDoctor)
-    let filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()))
+    let filteredDoctors;
+    if(term !== '') {
+        filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()))
+    }
     
     let ulTag = document.createElement('ul');
     let liTag;
