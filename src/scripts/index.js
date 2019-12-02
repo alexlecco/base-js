@@ -78,35 +78,35 @@ let users = [
     {
         user: "doc1",
         pass: "doc1",
-        name: "Roberto Chapatin",
+        name: "Dr Roberto Chapatin",
         isDoctor: true,
         specialty: "1"
     },
     {
         user: "doc2",
         pass: "doc2",
-        name: "Gregory House",
+        name: "Dr Gregory House",
         isDoctor: true,
         specialty: "2"
     },
     {
         user: "doc3",
         pass: "doc3",
-        name: "Julius Hibert",
+        name: "Dr Julius Hibert",
         isDoctor: true,
         specialty: "3"
     },
     {
         user: "doc4",
         pass: "doc4",
-        name: "Steven Strange",
+        name: "Dr Steven Strange",
         isDoctor: true,
         specialty: "4"
     },
     {
         user: "doc5",
         pass: "doc5",
-        name: "John Dolittle",
+        name: "Dr John Dolittle",
         isDoctor: true,
         specialty: "5"
     }
@@ -115,6 +115,9 @@ let users = [
 // functions
 function startApp() {
     document.getElementById("logoutBtn").hidden = true;
+    document.getElementById("account").hidden = true;
+    document.getElementById("card").hidden = true;
+    document.getElementById("loan").hidden = true;
 
     let user = localStorage.getItem("user");
     let pass = localStorage.getItem("pass");
@@ -217,4 +220,22 @@ window.search = function() {
 window.clean = function() {
     document.getElementById("clinic-input").value = ""
     document.getElementById("clinic-results").innerHTML = "<div></div>"
+}
+
+window.account = function() {
+    document.getElementById("account").hidden = false
+    document.getElementById("card").hidden = true
+    document.getElementById("loan").hidden = true
+}
+
+window.card = function() {
+    document.getElementById("account").hidden = true
+    document.getElementById("card").hidden = false
+    document.getElementById("loan").hidden = true
+}
+
+window.loan = function() {
+    document.getElementById("account").hidden = true
+    document.getElementById("card").hidden = true
+    document.getElementById("loan").hidden = false
 }

@@ -28,10 +28,44 @@
     </div>
 
     <div class="container bank">
-      <h3>nuestros productos</h3>
-      <button id="bank-account" onclick="account()">cuenta bancaria</button>
-      <button id="bank-card" onclick="card()">tarjeta de credito</button>
-      <button id="bank-loan" onclick="loan()">prestamo</button>
+      <div id="bank-select">
+        <h3>nuestros productos</h3>
+        <button id="bank-account" onclick="account()">cuenta bancaria</button>
+        <button id="bank-card" onclick="card()">tarjeta de credito</button>
+        <button id="bank-loan" onclick="loan()">prestamo</button>
+  
+        <div id="account">
+          <legend>ingresos personales</legend>
+          <input type="text" placeholder="ingreso">
+          <button>contratar</button>
+        </div>
+  
+        <div id="card">
+          <fieldset class="radiogroup">
+            <legend>tipo de tarjeta</legend>
+            <ul class="radio">
+              <li><input type="radio" name="product" value="base" /><label for="base">base</label></li>
+              <li><input type="radio" name="product" value="silver" /><label for="silver">silver</label></li>
+              <li><input type="radio" name="product" value="gold" /><label for="gold">gold</label></li>
+            </ul>
+            <button>contratar</button>
+          </fieldset>
+        </div>
+  
+        <div id="loan">
+          <legend>monto del prestamo</legend>
+          <select>
+            <option value="volvo">10.000</option>
+            <option value="saab">20.000</option>
+            <option value="mercedes">50.000</option>
+          </select>
+          <button>contratar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="bank-dashboard"></div>
+    
     </div>
 
   </div>

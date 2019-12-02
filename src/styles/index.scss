@@ -5,11 +5,23 @@ body {
   font-family: sans-serif;
 }
 
+fieldset {
+  display: block;
+  margin: 0px;
+  padding: 0px;
+  border: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
 .container {
   $self: &;
   padding: 50px 20px;
   background-color: red;
   margin: 10px 0;
+  max-width: 30%;
 
   &.clinic {
     background-color: aquamarine;
@@ -18,4 +30,12 @@ body {
   &.bank {
     background-color: salmon;
   }
+}
+
+#account, #card, #loan {
+  width: min-content;
+  background-color: sandybrown;
+  padding: 30px 20px;
+  margin: 25px 0;
+  width: auto;
 }
