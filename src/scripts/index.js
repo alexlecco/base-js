@@ -190,19 +190,21 @@ window.search = function() {
     let doctors = users.filter(user => user.isDoctor)
     let filteredDoctors;
     if(term !== '') {
-        filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()))
-    }
-    
-    let ulTag = document.createElement('ul');
-    let liTag;
-    filteredDoctors.forEach(doctor => {
-        liTag = document.createElement('li');
-        let textNode = document.createTextNode(doctor.name)
-        liTag.appendChild(textNode);
-        ulTag.appendChild(liTag);
-    });
+        filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()));
 
-    document.getElementById("clinic-results").appendChild(ulTag);
+        let ulTag = document.createElement('ul');
+        let liTag;
+        filteredDoctors.forEach(doctor => {
+            liTag = document.createElement('li');
+            let textNode = document.createTextNode(doctor.name);
+            liTag.appendChild(textNode);
+            ulTag.appendChild(liTag);
+        });
+
+        document.getElementById("clinic-results").appendChild(ulTag);
+    } else {
+        alert("Debe ingresar al menos 3 letras en la busqueda");
+    }
 }
 
 window.clean = function() {
