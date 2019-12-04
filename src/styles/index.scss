@@ -22,7 +22,7 @@ li {
 
 .content {
   $self: &;
-  padding: 50px 20px;
+  padding: 10px 20px;
   background-color: red;
   margin: 10px 10px 0;
   width: 350px;
@@ -40,6 +40,6 @@ li {
   width: min-content;
   background-color: sandybrown;
   padding: 30px 20px;
-  margin: 25px 0;
+  margin: 10px 0;
   width: auto;
 }
