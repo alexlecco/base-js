@@ -13,67 +13,157 @@ let users = [
         user: "alex",
         pass: "lecco",
         name: "Alex Villecco",
-        isDoctor: false
+        isDoctor: false,
+        turns: [
+            {
+                doctor: 'Dr Gregory House',
+                time: '15:00',
+                day: 'monday'
+            },
+            {
+                doctor: 'Dr Julius Hibert',
+                time: '19:00',
+                day: 'wednesday'
+            }
+        ],
+        products: [
+            {
+                type: 'account',
+                income: 20000,
+                id: 28743
+            },
+            {
+                type: 'card',
+                cardLevel: 0,
+                id: 29834
+            },
+            {
+                type: 'loan',
+                amount: 50000,
+                id: 89345
+            },
+            {
+                type: 'card',
+                cardLevel: 2,
+                id: 29834
+            },
+            {
+                type: 'account',
+                income: 50000,
+                id: 82952
+            },
+            {
+                type: 'account',
+                income: 10000,
+                id: 82934
+            },
+            {
+                type: 'card',
+                cardLevel: 1,
+                id: 29834
+            }
+        ]
     },
     {
         user: "pri",
         pass: "bar",
         name: "Pricilla Barcellone",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "ben",
         pass: "mon",
         name: "Benja Montero",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: [
+            {
+                type: 'account',
+                income: 10,
+                id: 28743
+            },
+            {
+                type: 'card',
+                cardLevel: 0,
+                id: 0
+            },
+            {
+                type: 'card',
+                cardLevel: 2,
+                id: 2
+            },
+            {
+                type: 'card',
+                cardLevel: 1,
+                id: 1
+            }
+        ]
     },
     {
         user: "mel",
         pass: "gra",
         name: "Melisa Gramajo",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "max",
         pass: "sim",
         name: "Maxi Simonazzi",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "pab",
         pass: "nav",
         name: "Juan Pablo Navarro",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "jos",
         pass: "mar",
         name: "Jose Marín",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "fed",
         pass: "mes",
         name: "Fede Mesón",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "cri",
         pass: "mol",
         name: "Cristian Molina",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "rob",
         pass: "sal",
         name: "Roberto Sale",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "max",
         pass: "rod",
         name: "Maxi Rodriguez",
-        isDoctor: false
+        isDoctor: false,
+        turns: [],
+        products: []
     },
     {
         user: "doc1",
@@ -114,19 +204,24 @@ let users = [
 
 // functions
 function startApp() {
+    let user;
+    let usersLocal;
+
     if(!localStorage.getItem("users")) {
         localStorage.setItem("users", JSON.stringify(users));
+        usersLocal = localStorage.getItem("users");
     }
+    //console.log("usersLocal:::::::::",usersLocal);
 
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("account").hidden = true;
     document.getElementById("card").hidden = true;
     document.getElementById("loan").hidden = true;
     
-    let user = localStorage.getItem("user");
-    let pass = localStorage.getItem("pass");
+    const userLocal = localStorage.getItem("user");
+    const passLocal = localStorage.getItem("pass");
     
-    if(identifyUser(user, pass)) {
+    if(identifyUser(userLocal, passLocal)) {
         document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${loggedUsr.name}</h1>`;
         document.getElementById("user").hidden = true;
         document.getElementById("pass").hidden = true;
@@ -134,6 +229,24 @@ function startApp() {
     } else {
         document.getElementById("loggedUser").hidden = true;
     }
+    
+    user = users.find(user => user.user === userLocal)
+    console.log("user:::::::::", user);
+    document.getElementById("account-container").innerHTML =
+        `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
+    
+    document.getElementById("card-container").innerHTML = 
+        `<h3>tarjetas: </h3> <ul>${user.products.filter(product => product.type === 'card')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>tipo: ${getCardName(product.cardLevel)}</li></div>`)}</ul>`;
+    
+    document.getElementById("loan-container").innerHTML = 
+        `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
+}
+
+function getCardName(cardLevel) {
+    return cardLevel === 0 ? 'normal' : cardLevel === 1 ? 'media' : 'gold';
 }
 
 function identifyUser(user, pass) {
@@ -153,8 +266,8 @@ function identifyUser(user, pass) {
             document.getElementById("logoutBtn").hidden = false;
             document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${users[i].name}</h1>`;
             
-            console.log("Logged: ", logged)
-            console.log("Logged User: ", loggedUsr.user)
+            //console.log("Logged: ", logged)
+            //console.log("Logged User: ", loggedUsr.user)
 
             return true
         }
@@ -163,11 +276,13 @@ function identifyUser(user, pass) {
 }
 
 window.login = function() {
-    let user = document.getElementById("user").value;
-    let pass = document.getElementById("pass").value;
+    let user;
+    let usersLocal;
+    let userLocal = document.getElementById("user").value;
+    let passLocal = document.getElementById("pass").value;
 
-    if(user && pass) {
-        identifyUser(user, pass);
+    if(userLocal && passLocal) {
+        identifyUser(userLocal, passLocal);
         if (!logged) {
             alert("Usuario incorrecto");
         } else {
@@ -178,6 +293,20 @@ window.login = function() {
     } else {
         alert("Debe ingresar usuario y contraseña");
     }
+
+    user = users.find(user => user.user === userLocal)
+    console.log("user:::::::::", user);
+    document.getElementById("account-container").innerHTML =
+        `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
+    
+    document.getElementById("card-container").innerHTML = 
+        `<h3>tarjetas: </h3> <ul>${user.products.filter(product => product.type === 'card')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>tipo: ${getCardName(product.cardLevel)}</li></div>`)}</ul>`;
+    
+    document.getElementById("loan-container").innerHTML = 
+        `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
 };
 
 window.logout = function() {
@@ -190,7 +319,7 @@ window.logout = function() {
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("loginBtn").hidden = false;
 
-    console.log("Logged: ", logged)
+    //console.log("Logged: ", logged)
     document.getElementById("loggedUser").hidden = true;
     document.getElementById("user").hidden = false;
     document.getElementById("pass").hidden = false;

@@ -43,3 +43,21 @@ li {
   margin: 10px 0;
   width: auto;
 }
+
+#account-container, #card-container, #loan-container {
+  width: min-content;
+  background-color: sandybrown;
+  padding: 5px 5px;
+  margin: 10px 0;
+  width: auto;
+}
+
+.product {
+  background-color: violet;
+  margin: 5px 0;
+  padding: 5px 0;
+}
+
+ul {
+  padding-inline-start: 0px;
+}
