@@ -440,7 +440,38 @@ window.hireAccount = function() {
 }
 
 window.hireCard = function() {
-    
+    let cardLevel;
+    let userLocal = localStorage.getItem("user");
+    let usersLocal = JSON.parse(localStorage.getItem("users"));
+
+    if (document.getElementById('base').checked) cardLevel = 0;
+    if (document.getElementById('silver').checked) cardLevel = 1;
+    if (document.getElementById('gold').checked) cardLevel = 2;
+
+    const newProduct = {type: 'card', cardLevel: cardLevel, id: Math.floor(Math.random() * 100000)}
+
+    let key;
+    for(let i = 0; i < usersLocal.length-1; i++) {
+        if(usersLocal[i].user === userLocal) {
+            key = i
+        }
+    }
+
+    usersLocal[key].products.push(newProduct)
+
+    localStorage.setItem("users", JSON.stringify(usersLocal));
+
+    let userHiring = usersLocal.find(user => user.user === userLocal)
+    document.getElementById("loan-container").innerHTML = 
+        `<h3>tarjetas: </h3> <ul>${userHiring.products.filter(product => product.type === 'card')
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>tipo: ${getCardName(product.cardLevel)}</li>
+                    </div>`)}
+                </ul>`;
+
+    document.getElementById("income").value = ""
 }
 
 window.hireLoan = function() {
