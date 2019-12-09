@@ -48,16 +48,6 @@ let users = [
                 id: 29834
             },
             {
-                type: 'account',
-                income: 50000,
-                id: 82952
-            },
-            {
-                type: 'account',
-                income: 10000,
-                id: 82934
-            },
-            {
                 type: 'card',
                 cardLevel: 1,
                 id: 29834
@@ -209,9 +199,9 @@ function startApp() {
 
     if(!localStorage.getItem("users")) {
         localStorage.setItem("users", JSON.stringify(users));
-        usersLocal = localStorage.getItem("users");
     }
-    //console.log("usersLocal:::::::::",usersLocal);
+    usersLocal = JSON.parse(localStorage.getItem("users"));
+    console.log("usersLocal:::::::::",usersLocal);
 
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("account").hidden = true;
@@ -230,8 +220,7 @@ function startApp() {
         document.getElementById("loggedUser").hidden = true;
     }
     
-    user = users.find(user => user.user === userLocal)
-    console.log("user:::::::::", user);
+    user = usersLocal.find(user => user.user === userLocal)
     document.getElementById("account-container").innerHTML =
         `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
         .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
@@ -246,7 +235,7 @@ function startApp() {
 }
 
 function getCardName(cardLevel) {
-    return cardLevel === 0 ? 'normal' : cardLevel === 1 ? 'media' : 'gold';
+    return cardLevel === 0 ? 'base' : cardLevel === 1 ? 'silver' : 'gold';
 }
 
 function identifyUser(user, pass) {
@@ -277,7 +266,8 @@ function identifyUser(user, pass) {
 
 window.login = function() {
     let user;
-    let usersLocal;
+    let usersLocal = JSON.parse(localStorage.getItem("users"));
+
     let userLocal = document.getElementById("user").value;
     let passLocal = document.getElementById("pass").value;
 
@@ -294,8 +284,7 @@ window.login = function() {
         alert("Debe ingresar usuario y contraseña");
     }
 
-    user = users.find(user => user.user === userLocal)
-    console.log("user:::::::::", user);
+    user = usersLocal.find(user => user.user === userLocal)
     document.getElementById("account-container").innerHTML =
         `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
         .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
@@ -356,7 +345,29 @@ window.clean = function() {
 
 window.hireAccount = function() {
     let income = document.getElementById("income").value;
+    let userLocal = localStorage.getItem("user");
+    let usersLocal = JSON.parse(localStorage.getItem("users"));
     
+    const newProduct = {type: 'account', income: income, id: Math.floor(Math.random() * 100000) }
+    
+    let key;
+    for(let i = 0; i < usersLocal.length-1; i++) {
+        if(usersLocal[i].user === userLocal) {
+            key = i
+        }
+    }
+
+    usersLocal[key].products.push(newProduct)
+
+    localStorage.setItem("users", JSON.stringify(usersLocal));
+
+    let userHiring = usersLocal.find(user => user.user === userLocal)
+    //console.log("userHirinDg:::::::::", userHiring);
+    document.getElementById("account-container").innerHTML =
+        `<h3>cuentas: </h3> <ul>${userHiring.products.filter(product => product.type === 'account')
+        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
+
+    document.getElementById("income").value = ""
 }
 
 window.hireCard = function() {
