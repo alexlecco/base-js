@@ -232,6 +232,12 @@ function startApp() {
     document.getElementById("loan-container").innerHTML = 
         `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
         .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
+
+    document.getElementById("turns").innerHTML = 
+        `<ul>${user.turns
+        .map(turn => `<div class="product"><li>doctor: ${turn.doctor}</li>
+                                           <li>dia: ${turn.day}</li>
+                                           <li>hora: ${turn.time}</li></div>`)}</ul>`;
 }
 
 function getCardName(cardLevel) {
@@ -296,6 +302,13 @@ window.login = function() {
     document.getElementById("loan-container").innerHTML = 
         `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
         .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
+
+
+    document.getElementById("turns").innerHTML = 
+        `<ul>${user.turns
+        .map(turn => `<div class="product"><li>doctor: ${turn.doctor}</li>
+                                           <li>dia: ${turn.day}</li>
+                                           <li>hora: ${turn.time}</li></div>`)}</ul>`;
 };
 
 window.logout = function() {
@@ -312,6 +325,9 @@ window.logout = function() {
     document.getElementById("loggedUser").hidden = true;
     document.getElementById("user").hidden = false;
     document.getElementById("pass").hidden = false;
+
+    document.getElementById("clinic-input").value = ""
+    document.getElementById("clinic-results").innerHTML = "<div></div>"
 }
 
 window.search = function() {
@@ -371,6 +387,7 @@ window.hireAccount = function() {
 }
 
 window.hireCard = function() {
+    
 }
 
 window.hireLoan = function() {
