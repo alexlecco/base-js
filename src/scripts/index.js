@@ -201,7 +201,7 @@ function startApp() {
         localStorage.setItem("users", JSON.stringify(users));
     }
     usersLocal = JSON.parse(localStorage.getItem("users"));
-    console.log("usersLocal:::::::::",usersLocal);
+    //console.log("usersLocal:::::::::",usersLocal);
 
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("account").hidden = true;
@@ -222,22 +222,42 @@ function startApp() {
     
     user = usersLocal.find(user => user.user === userLocal)
     document.getElementById("account-container").innerHTML =
-        `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
-    
+    `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
+    .map(product => `
+                <div class="product">
+                    <li>id: ${product.id}</li>
+                    <li>ingreso: $${product.income}</li>
+                </div>`)}
+            </ul>`;
+
     document.getElementById("card-container").innerHTML = 
         `<h3>tarjetas: </h3> <ul>${user.products.filter(product => product.type === 'card')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>tipo: ${getCardName(product.cardLevel)}</li></div>`)}</ul>`;
-    
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>tipo: ${getCardName(product.cardLevel)}</li>
+                    </div>`)}
+                </ul>`;
+
     document.getElementById("loan-container").innerHTML = 
         `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>monto: $${product.amount}</li>
+                    </div>`)}
+                </ul>`;
+
 
     document.getElementById("turns").innerHTML = 
         `<ul>${user.turns
-        .map(turn => `<div class="product"><li>doctor: ${turn.doctor}</li>
-                                           <li>dia: ${turn.day}</li>
-                                           <li>hora: ${turn.time}</li></div>`)}</ul>`;
+        .map(turn => `
+                    <div class="product">
+                        <li>doctor: ${turn.doctor}</li>
+                        <li>dia: ${turn.day}</li>
+                        <li>hora: ${turn.time}</li>
+                    </div>`)}
+                </ul>`;
 }
 
 function getCardName(cardLevel) {
@@ -293,22 +313,41 @@ window.login = function() {
     user = usersLocal.find(user => user.user === userLocal)
     document.getElementById("account-container").innerHTML =
         `<h3>cuentas: </h3> <ul>${user.products.filter(product => product.type === 'account')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>ingreso: $${product.income}</li>
+                    </div>`)}
+                </ul>`;
     
     document.getElementById("card-container").innerHTML = 
         `<h3>tarjetas: </h3> <ul>${user.products.filter(product => product.type === 'card')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>tipo: ${getCardName(product.cardLevel)}</li></div>`)}</ul>`;
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>tipo: ${getCardName(product.cardLevel)}</li>
+                    </div>`)}
+                </ul>`;
     
     document.getElementById("loan-container").innerHTML = 
         `<h3>prestamos: </h3> <ul>${user.products.filter(product => product.type === 'loan')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>monto: $${product.amount}</li></div>`)}</ul>`;
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>monto: $${product.amount}</li>
+                    </div>`)}
+                </ul>`;
 
 
     document.getElementById("turns").innerHTML = 
         `<ul>${user.turns
-        .map(turn => `<div class="product"><li>doctor: ${turn.doctor}</li>
-                                           <li>dia: ${turn.day}</li>
-                                           <li>hora: ${turn.time}</li></div>`)}</ul>`;
+        .map(turn => `
+                    <div class="product">
+                        <li>doctor: ${turn.doctor}</li>
+                        <li>dia: ${turn.day}</li>
+                        <li>hora: ${turn.time}</li>
+                    </div>`)}
+                </ul>`;
 };
 
 window.logout = function() {
@@ -376,12 +415,26 @@ window.hireAccount = function() {
     usersLocal[key].products.push(newProduct)
 
     localStorage.setItem("users", JSON.stringify(usersLocal));
+    for(let i = 0; i < usersLocal.length-1; i++) {
+        if(usersLocal[i].user === userLocal) {
+            key = i
+        }
+    }
+
+    usersLocal[key].products.push(newProduct)
+
+    localStorage.setItem("users", JSON.stringify(usersLocal));
 
     let userHiring = usersLocal.find(user => user.user === userLocal)
     //console.log("userHirinDg:::::::::", userHiring);
     document.getElementById("account-container").innerHTML =
         `<h3>cuentas: </h3> <ul>${userHiring.products.filter(product => product.type === 'account')
-        .map(product => `<div class="product"><li>id: ${product.id}</li><br/><li>ingreso: $${product.income}</li></div>`)}</ul>`;
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li><br/>
+                        <li>ingreso: $${product.income}</li>
+                    </div>`)}
+                </ul>`;
 
     document.getElementById("income").value = ""
 }
@@ -391,6 +444,35 @@ window.hireCard = function() {
 }
 
 window.hireLoan = function() {
+    let amount = document.getElementById("amount");
+    let selectedValue = amount.options[amount.selectedIndex].value;
+    let userLocal = localStorage.getItem("user");
+    let usersLocal = JSON.parse(localStorage.getItem("users"));
+
+    const newProduct = {type: 'loan', amount: selectedValue, id: Math.floor(Math.random() * 100000)}
+
+    let key;
+    for(let i = 0; i < usersLocal.length-1; i++) {
+        if(usersLocal[i].user === userLocal) {
+            key = i
+        }
+    }
+
+    usersLocal[key].products.push(newProduct)
+
+    localStorage.setItem("users", JSON.stringify(usersLocal));
+
+    let userHiring = usersLocal.find(user => user.user === userLocal)
+    document.getElementById("loan-container").innerHTML = 
+        `<h3>prestamos: </h3> <ul>${userHiring.products.filter(product => product.type === 'loan')
+        .map(product => `
+                    <div class="product">
+                        <li>id: ${product.id}</li>
+                        <li>monto: $${product.amount}</li>
+                    </div>`)}
+                </ul>`;
+
+    document.getElementById("income").value = ""
 }
 
 window.account = function() {
