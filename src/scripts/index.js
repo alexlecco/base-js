@@ -267,7 +267,6 @@ function getCardName(cardLevel) {
 function identifyUser(user, pass) {
     for(var i = 0; i < users.length; i++) {
         if(user === users[i].user && pass === users[i].pass) {
-            
             logged = true;
             loggedUsr = { ...users[i] };
         
@@ -281,9 +280,6 @@ function identifyUser(user, pass) {
             document.getElementById("logoutBtn").hidden = false;
             document.getElementById("greetings").innerHTML = `<h1>Bienvenide ${users[i].name}</h1>`;
             
-            //console.log("Logged: ", logged)
-            //console.log("Logged User: ", loggedUsr.user)
-
             return true
         }
     }
@@ -356,11 +352,9 @@ window.logout = function() {
     localStorage.setItem("user", "");
     localStorage.setItem("pass", "");
 
-    document.getElementById("greetings").innerHTML = `<h1></h1>`;
+    document.getElementById("greetings").innerHTML = `<div></div>`;
     document.getElementById("logoutBtn").hidden = true;
     document.getElementById("loginBtn").hidden = false;
-
-    //console.log("Logged: ", logged)
     document.getElementById("loggedUser").hidden = true;
     document.getElementById("user").hidden = false;
     document.getElementById("pass").hidden = false;
@@ -370,24 +364,18 @@ window.logout = function() {
 }
 
 window.search = function() {
-    document.getElementById("clinic-results").innerHTML = "<div></div>"
+    document.getElementById("clinic-results").innerHTML = ""
     let term = document.getElementById('clinic-input').value;
 
-    let doctors = users.filter(user => user.isDoctor)
+    let doctors = users.filter( user => user.isDoctor );
     let filteredDoctors;
+    
     if(term !== '') {
         filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()));
 
-        let ulTag = document.createElement('ul');
-        let liTag;
         filteredDoctors.forEach(doctor => {
-            liTag = document.createElement('li');
-            let textNode = document.createTextNode(doctor.name);
-            liTag.appendChild(textNode);
-            ulTag.appendChild(liTag);
+            document.getElementById('clinic-results').innerHTML += `<li>${doctor.name}</li>`
         });
-
-        document.getElementById("clinic-results").appendChild(ulTag);
     } else {
         alert("Debe ingresar al menos 1 letra en la busqueda");
     }
@@ -420,10 +408,6 @@ window.hireAccount = function() {
             key = i
         }
     }
-
-    usersLocal[key].products.push(newProduct)
-
-    localStorage.setItem("users", JSON.stringify(usersLocal));
 
     let userHiring = usersLocal.find(user => user.user === userLocal)
     //console.log("userHirinDg:::::::::", userHiring);
