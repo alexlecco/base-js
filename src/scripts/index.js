@@ -1,6 +1,6 @@
 import '../styles/index.scss';
 
-console.log('webpack starterkit');
+console.log('start Base JS');
 
 // when app starts
 window.onload = startApp;
@@ -148,9 +148,9 @@ let users = [
         products: []
     },
     {
-        user: "max",
-        pass: "rod",
-        name: "Maxi Rodriguez",
+        user: "cel",
+        pass: "fer",
+        name: "Celso Fernandez",
         isDoctor: false,
         turns: [],
         products: []
@@ -373,9 +373,13 @@ window.search = function() {
     if(term !== '') {
         filteredDoctors = doctors.filter(doctor => doctor.name.toLowerCase().includes(term.toLowerCase()));
 
-        filteredDoctors.forEach(doctor => {
-            document.getElementById('clinic-results').innerHTML += `<li>${doctor.name}</li>`
-        });
+        document.getElementById("clinic-results").innerHTML =
+          `<ul class="radio">${filteredDoctors
+          .map(doctor => `
+                      <li class="doctor">
+                          <input type="radio" id="${doctor.user}" name="doctor" value="${doctor.name}" />${doctor.name}
+                      </li>`)}
+                  </ul>`;
     } else {
         alert("Debe ingresar al menos 1 letra en la busqueda");
     }
@@ -384,6 +388,52 @@ window.search = function() {
 window.clean = function() {
     document.getElementById("clinic-input").value = ""
     document.getElementById("clinic-results").innerHTML = "<div></div>"
+}
+
+window.getTurn = function() {
+  let doctor_selected;
+  let day_selected;
+  let time_selected;
+  let usersLocal = JSON.parse(localStorage.getItem("users"));
+  let userLocal = localStorage.getItem("user");
+  let user;
+
+  let time = document.getElementById("time");
+  time_selected = time.options[time.selectedIndex].value;
+
+  let day = document.getElementById("day");
+  day_selected = day.options[day.selectedIndex].value;
+
+  let doctors = users.filter( user => user.isDoctor );
+
+  for(let i = 1; i < doctors.length+1; i++) {
+    if(document.getElementById(`doc${i}`).checked) doctor_selected = i;
+  }
+
+  const newTurn = {doctor: doctors[doctor_selected-1].name, time: time_selected, day: day_selected}
+
+  let key;
+  for(let i = 0; i < usersLocal.length-1; i++) {
+      if(usersLocal[i].user === userLocal) {
+          key = i
+      }
+  }
+
+  usersLocal[key].turns.push(newTurn)
+
+  localStorage.setItem("users", JSON.stringify(usersLocal));
+
+  user = usersLocal.find(user => user.user === userLocal)
+  document.getElementById("turns").innerHTML = 
+  `<ul>${user.turns
+  .map(turn =>
+    `
+      <div class="product">
+        <li>doctor: ${turn.doctor}</li>
+        <li>dia: ${turn.day}</li>
+        <li>hora: ${turn.time}</li>
+      </div>`)}
+    </ul>`;
 }
 
 window.hireAccount = function() {
@@ -403,11 +453,6 @@ window.hireAccount = function() {
     usersLocal[key].products.push(newProduct)
 
     localStorage.setItem("users", JSON.stringify(usersLocal));
-    for(let i = 0; i < usersLocal.length-1; i++) {
-        if(usersLocal[i].user === userLocal) {
-            key = i
-        }
-    }
 
     let userHiring = usersLocal.find(user => user.user === userLocal)
     //console.log("userHirinDg:::::::::", userHiring);
@@ -419,7 +464,6 @@ window.hireAccount = function() {
                         <li>ingreso: $${product.income}</li>
                     </div>`)}
                 </ul>`;
-
     document.getElementById("income").value = ""
 }
 
@@ -446,7 +490,7 @@ window.hireCard = function() {
     localStorage.setItem("users", JSON.stringify(usersLocal));
 
     let userHiring = usersLocal.find(user => user.user === userLocal)
-    document.getElementById("loan-container").innerHTML = 
+    document.getElementById("card-container").innerHTML = 
         `<h3>tarjetas: </h3> <ul>${userHiring.products.filter(product => product.type === 'card')
         .map(product => `
                     <div class="product">
@@ -454,8 +498,6 @@ window.hireCard = function() {
                         <li>tipo: ${getCardName(product.cardLevel)}</li>
                     </div>`)}
                 </ul>`;
-
-    document.getElementById("income").value = ""
 }
 
 window.hireLoan = function() {

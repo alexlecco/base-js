@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>webpack starterkit</title>
+  <title>Base JS</title>
 </head>
 <body>
   <h1>Base JS</h1>
@@ -24,7 +24,21 @@
         <input id="clinic-input" type="text" placeholder="Nombre del medico" required>
         <button id="clinic-search" onclick="search()">buscar</button>
         <button id="clinic-clean" onclick="clean()">limpiar</button>
+        <button id="clinic-getTurn" onclick="getTurn()">sacar turno</button>
+        
         <ul id="clinic-results"></ul>
+        
+        <select id="day">
+          <option value="mon">Lunes</option>
+          <option value="tue">Martes</option>
+          <option value="wed">Miercoles</option>
+        </select>
+
+        <select id="time">
+          <option value="17">17:00</option>
+          <option value="18">18:00</option>
+          <option value="19">19:00</option>
+        </select>
       </div>
   
       <div class="content clinic">
@@ -36,7 +50,7 @@
     <div class="row">
       <div class="content bank">
         <div id="bank-select">
-          <h3>nuestros productos</h3>
+          <h3>our products</h3>
           <button id="bank-account" onclick="account()">cuenta bancaria</button>
           <button id="bank-card" onclick="card()">tarjeta de credito</button>
           <button id="bank-loan" onclick="loan()">prestamo</button>
